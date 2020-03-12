@@ -32,7 +32,52 @@ const resource = (params, data = null) => {
   });
 };
 
-module.exports = { getTypicode, resource };
+const postPost = data => {
+  const url = URL_BASE + "/posts";
+  const params = {
+    body: JSON.stringify(data),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  };
+
+  return new Promise((resolve, reject) => {
+    request.post(url, params, (err, { statusCode, statusMessage }, body) => {
+      if (err) return reject(err);
+      resolve({ body: JSON.parse(body), statusCode, statusMessage });
+    });
+  });
+};
+
+const putIn = data => {
+  const url = URL_BASE + "/posts/1" ;
+  const params = {
+    body: JSON.stringify(data),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  };
+
+  return new Promise((resolve, reject) => {
+    request.put(url, params, (err, {statusCode, statusMessage }, body) => {
+      if (err) return reject(err);
+      resolve({ body: JSON.parse(body), statusCode, statusMessage });
+    });
+  });
+};
+
+const deletar = data => {
+  const url = URL_BASE + "/posts/1" ;
+  
+  return new Promise((resolve, reject) => {
+    request.delete(url, (err, {statusCode, statusMessage }, body) => {
+      if (err) return reject(err);
+      resolve({ statusCode, statusMessage });
+    });
+  });
+};
+
+module.exports = { getTypicode, resource, postPost, putIn, deletar };
 
 // GET	/posts
 // GET	/posts/1
